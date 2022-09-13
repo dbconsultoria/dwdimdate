@@ -6,12 +6,13 @@ GO
 
 IF NOT EXISTS(SELECT 0 FROM sysobjects WHERE NAME ='DimDate' and xtype='U')
 begin
-	CREATE TABLE Dw.DimDate(
+	create TABLE Dw.DimDate(
 		dtData DATE not null
 		,dtMonth smallint
 		,dtDay smallint
 		,dtYear int
 		,dtQuarter tinyint
+		,dtSemester tinyint
 		,dtMonthName nvarchar(150)
 		,dtWeekDayName nvarchar(150)
 	);
@@ -36,6 +37,7 @@ BEGIN
 			,dtDay 
 			,dtYear
 			,dtQuarter 
+			,dtSemester
 			,dtMonthName 
 			,dtWeekDayName)
 	SELECT 
@@ -44,6 +46,7 @@ BEGIN
 		,DAY(@dtdata)
 		,YEAR(@dtdata)
 		,DATEPART(QUARTER, @dtdata)
+		,CASE WHEN month(@dtdata) < 7 then  1 else 2 end
 		,FORMAT( GETDATE(), 'MMMM', @culture )
 		,FORMAT( GETDATE(), 'dddd', @culture )
 

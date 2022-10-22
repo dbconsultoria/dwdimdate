@@ -47,8 +47,8 @@ BEGIN
 		,YEAR(@dtdata)
 		,DATEPART(QUARTER, @dtdata)
 		,CASE WHEN month(@dtdata) < 7 then  1 else 2 end
-		,FORMAT( GETDATE(), 'MMMM', @culture )
-		,FORMAT( GETDATE(), 'dddd', @culture )
+		,FORMAT( @dtdata, 'MMMM', @culture )
+		,FORMAT( @dtdata, 'dddd', @culture )
 
 	SELECT 
 		@count+=1
